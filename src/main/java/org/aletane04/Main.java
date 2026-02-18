@@ -15,6 +15,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,6 +25,12 @@ public class Main
 {
     public static void main(String[] args) throws IOException, ClassNotFoundException
     {
+
+        Fattorino Giovanni = new Fattorino("Giovanni","Rossi","0612708777",500.90,LocalDate.of(2025,12,12),4);
+        System.out.println(Giovanni);
+
+
+
         /*
         List <String> myList = new ArrayList<>();
         myList.add("Andrea");
