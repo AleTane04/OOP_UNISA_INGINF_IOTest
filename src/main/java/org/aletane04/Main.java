@@ -26,8 +26,12 @@ public class Main
     public static void main(String[] args) throws IOException, ClassNotFoundException
     {
 
-        Fattorino Giovanni = new Fattorino("Giovanni","Rossi","0612708777",500.90,LocalDate.of(2025,12,12),4);
-        System.out.println(Giovanni);
+        Fattorino giovanni = new Fattorino("Giovanni","Rossi","0612708777",500.90,LocalDate.of(2025,12,12),4);
+        System.out.println(giovanni);
+        giovanni.addCAP("86039");
+        giovanni.addCAP("84014");
+        System.out.println(giovanni.getCAPs());
+
 
 
 
