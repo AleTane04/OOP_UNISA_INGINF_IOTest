@@ -24,6 +24,7 @@ public class Main
 {
     public static void main(String[] args) throws IOException, ClassNotFoundException
     {
+        /*
         List <String> myList = new ArrayList<>();
         myList.add("Andrea");
         myList.add("Bob");
@@ -31,7 +32,7 @@ public class Main
         myList.add("Gaetano");
         myList.add("Lucia");
 
-        System.out.println("/* ---- DATA OUTPUT/INPUT STREAM ---- */");
+        System.out.println(" ---- DATA OUTPUT/INPUT STREAM ---- ");
         FileOutputStream fos = new FileOutputStream("myList.bin");
         BufferedOutputStream bos = new BufferedOutputStream(fos);
         DataOutputStream dos = new DataOutputStream(bos);
@@ -46,7 +47,7 @@ public class Main
         dos.close();
 
 
-        /* ------------------------ */
+
 
         FileInputStream fis = new FileInputStream("myList");
         BufferedInputStream bis = new BufferedInputStream(fis);
@@ -69,7 +70,7 @@ public class Main
 
         dis.close();
 
-        System.out.println("/* ---- OBJECT OUTPUT/INPUT STREAM ---- */");
+        System.out.println(" ---- OBJECT OUTPUT/INPUT STREAM ---- ");
 
         try(ObjectOutputStream oos = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream("mioSerializzato.obj"))))
         {
@@ -94,7 +95,7 @@ public class Main
             System.out.println("Ziopew lettura fallita");
         }
 
-        System.out.println("/* ---- PRINT WRITED/BYUFFERED READER ---- */");
+        System.out.println(" ---- PRINT WRITED/BYUFFERED READER ---- ");
 
         try(PrintWriter pw = new PrintWriter(new FileWriter("mioSerializzato.csv")))
         {
@@ -112,7 +113,7 @@ public class Main
         }
 
 
-        /* ---------- */
+
         ArrayList listCSV = new ArrayList();
         try(BufferedReader br = new BufferedReader(new FileReader("mioSerializzato.csv")))
         {
@@ -137,8 +138,8 @@ public class Main
             System.out.println(studentini.toString());
         }
 
-        System.out.println("\n ------- SCANNER ---------- \n");
-        /* ----------  */
+        System.out.println(" ------- SCANNER ---------- ");
+
         List <String> mioScanner = new ArrayList();
         try(Scanner scanner = new Scanner(new BufferedReader(new FileReader("mioSerializzato.csv"))))
         {
@@ -161,7 +162,7 @@ public class Main
         }
 
         System.out.println(mioScanner);
-
+        */
     }
 
 
