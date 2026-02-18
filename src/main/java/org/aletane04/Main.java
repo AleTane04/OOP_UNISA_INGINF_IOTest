@@ -33,7 +33,7 @@ public class Main
         System.out.println(giovanni.getCAPs());
 
 
-
+        AnagraficaImpiegati anagrafica1 = new AnagraficaImpiegati("Questa è la prima anagrafica dell'azienda");
 
         /*
         List <String> myList = new ArrayList<>();
