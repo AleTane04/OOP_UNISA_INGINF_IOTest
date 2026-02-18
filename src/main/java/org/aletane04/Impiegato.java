@@ -2,7 +2,7 @@ package org.aletane04;
 
 import java.time.LocalDate;
 
-public class Impiegato implements Comparable<Impiegato>
+public abstract class Impiegato implements Comparable<Impiegato>
 {
     private static int counter=0;
     private int id;
@@ -45,11 +45,7 @@ public class Impiegato implements Comparable<Impiegato>
     }
 
 
-    public /*abstract*/ double calcolaStipendioMensile()
-    {
-        return 0.0;
-    }
-
+    public abstract double calcolaStipendioMensile();
 
     public String getNome()
     {

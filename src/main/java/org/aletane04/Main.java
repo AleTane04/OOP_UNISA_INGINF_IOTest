@@ -25,7 +25,7 @@ public class Main
 {
     public static void main(String[] args) throws IOException, ClassNotFoundException
     {
-
+    /*
         Fattorino giovanni = new Fattorino("Giovanni","Rossi","0612708777",500.90,LocalDate.of(2025,12,12),4);
         System.out.println(giovanni);
         giovanni.addCAP("86039");
@@ -33,8 +33,65 @@ public class Main
         System.out.println(giovanni.getCAPs());
 
 
-        AnagraficaImpiegati anagrafica1 = new AnagraficaImpiegati("Questa è la prima anagrafica dell'azienda");
 
+        AnagraficaImpiegati anagrafica1 = new AnagraficaImpiegati("Questa è la prima anagrafica dell'azienda");
+        anagrafica1.aggiungiImpiegato(giovanni);
+*/
+        String filename = "dipendenti.dat";
+
+        // 1. Setup the data
+        AnagraficaImpiegati ufficio = new AnagraficaImpiegati("Ufficio Centrale");
+
+        // Adding a Capo
+        Capo boss = new Capo("Mario", "Rossi", "C001", 3000.0, LocalDate.of(2010, 5, 12), 500.0);
+
+        // Adding a Tecnico
+        Tecnico tech = new Tecnico("Luigi", "Verdi", "T002", 2000.0, LocalDate.of(2020, 1, 15), 3, "Cybersecurity");
+
+        // Adding a Fattorino
+        Fattorino delivery = new Fattorino("Anna", "Bianchi", "F003", 1200.0, LocalDate.of(2022, 3, 20), 150);
+        // Assuming Fattorino has a way to add CAPs
+        delivery.getCAPs().addAll(Arrays.asList("00100", "00123", "00185"));
+
+        ufficio.aggiungiImpiegato(boss);
+        ufficio.aggiungiImpiegato(tech);
+        ufficio.aggiungiImpiegato(delivery);
+
+        // 2. Save to file
+        try {
+            System.out.println("Salvataggio in corso...");
+            ufficio.salvaDOS(filename);
+            System.out.println("Salvataggio completato!\n");
+        } catch (IOException e) {
+            System.err.println("Errore durante il salvataggio: " + e.getMessage());
+        }
+
+        // 3. Load from file
+        try {
+            System.out.println("Caricamento in corso...");
+            AnagraficaImpiegati caricata = AnagraficaImpiegati.leggiDIS(filename);
+            System.out.println("Caricamento completato!");
+            System.out.println("Descrizione Anagrafica: " + caricata.descrizione);
+
+            // 4. Verify the data
+            System.out.println("\n--- Elenco Impiegati Caricati ---");
+            // Note: Since you use a Map, the order might change, which is normal.
+            for (String matricola : new String[]{"C001", "T002", "F003"}) {
+                Impiegato imp = caricata.cercaImpiegato(matricola);
+                if (imp != null) {
+                    System.out.println("Trovato: " + imp.getNome() + " " + imp.getCognome() +
+                            " [" + imp.getClass().getSimpleName() + "]");
+
+                    // Specific check for Technical specialization to prove no data loss
+                    if (imp instanceof Tecnico) {
+                        System.out.println(" -> Specializzazione: " + ((Tecnico) imp).getSpecializzazione());
+                    }
+                }
+            }
+
+        } catch (IOException e) {
+            System.err.println("Errore durante la lettura: " + e.getMessage());
+        }
         /*
         List <String> myList = new ArrayList<>();
         myList.add("Andrea");

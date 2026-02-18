@@ -2,7 +2,9 @@ package org.aletane04;
 
 import java.io.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -40,25 +42,35 @@ public class AnagraficaImpiegati implements Serializable
             dos.writeUTF(imp.getNome());
             dos.writeUTF(imp.getCognome());
             dos.writeUTF(imp.getCodiceMatricola());
-            switch (imp.getClass().getName())
+            dos.writeUTF(imp.getClass().getSimpleName());
+            dos.writeUTF(imp.getDataAssunzione().toString());
+            switch (imp.getClass().getSimpleName())
             {
                 case "Capo": 
                     Capo cap = (Capo) imp;
                     dos.writeDouble(cap.calcolaStipendioMensile());
+                    dos.writeDouble(cap.getBonusDirigenziale());
                     break;
                 case "Tecnico":
                     Tecnico tec = (Tecnico) imp;
                     dos.writeDouble(tec.calcolaStipendioMensile());
+                    dos.writeInt(tec.getLivello());
+                    dos.writeUTF(tec.getSpecializzazione());
                     break;
                 case "Fattorino":
                     Fattorino fat = (Fattorino) imp;
                     dos.writeDouble(fat.calcolaStipendioMensile());
+                    dos.writeInt(fat.getCAPs().size());
+                    dos.writeInt(fat.getNumeroConsegneEffettuate());
+                    for(String cappippo : fat.getCAPs())
+                        dos.writeUTF(cappippo);
+
                     break;
                 default:
                     dos.writeUTF("Stipendio di default");
             }
 
-            dos.writeUTF(imp.getDataAssunzione().toString());
+
         }
         dos.close();
     }
@@ -77,11 +89,38 @@ public class AnagraficaImpiegati implements Serializable
                 String nome = dis.readUTF();
                 String cognome = dis.readUTF();
                 String codiceMatricola = dis.readUTF();
-                double stipendio = dis.readDouble();
+                String tipo = dis.readUTF();
                 LocalDate dataAssunzione = LocalDate.parse(dis.readUTF());
+                if(tipo.equals("Fattorino"))
+                {
+                    List<String> lista = new ArrayList<>();
 
-                Impiegato imp = new Impiegato(nome,cognome,codiceMatricola,stipendio,dataAssunzione);
-                a.aggiungiImpiegato(imp);
+                    double stipendio = dis.readDouble();
+                    int lunghezza = dis.readInt();
+                    int nCE = dis.readInt();
+                    for (int i = 0; i < lunghezza; i++)
+                    {
+                        String elemento = dis.readUTF();
+                        lista.add(elemento);
+                    }
+
+                    a.aggiungiImpiegato(new Fattorino(nome,cognome,codiceMatricola,stipendio,dataAssunzione,nCE));
+                }
+                if(tipo.equals("Tecnico"))
+                {
+                    double stipendio = dis.readDouble();
+                    int livello = dis.readInt();
+                    String specializzazione = dis.readUTF();
+
+                    a.aggiungiImpiegato(new Tecnico(nome, cognome,codiceMatricola, stipendio, dataAssunzione,livello,specializzazione));
+                }
+                if(tipo.equals("Capo"))
+                {
+                    double stipendio = dis.readDouble();
+                    double bonus = dis.readDouble();
+
+                    a.aggiungiImpiegato(new Capo(nome, cognome,codiceMatricola, stipendio, dataAssunzione,bonus));
+                }
             }
         }
         catch (EOFException e)
@@ -91,5 +130,6 @@ public class AnagraficaImpiegati implements Serializable
         dis.close();
         return a;
     }
+
 
 }
